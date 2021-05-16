@@ -1,65 +1,65 @@
-// const mysql = require('mysql');
-// const inquirer = require('inquirer');
+const mysql = require('mysql');
+const inquirer = require('inquirer');
 
 
-// const connection = mysql.createConnection({
-//   host: 'localhost',
+const connection = mysql.createConnection({
+  host: 'localhost',
 
-//   // Your port; if not 3306
-//   port: 3306,
+  // Your port; if not 3306
+  port: 3306,
 
-//   // Your username
-//   user: 'root',
+  // Your username
+  user: 'root',
 
-//   // Be sure to update with your own MySQL password!
-//   password: 'ChristopherOnions',
-//   database: 'employee_tracker',
-// });
+  // Be sure to update with your own MySQL password!
+  password: 'ChristopherOnions',
+  database: 'employee_tracker',
+});
 
-// // Connect to the DB
-// connection.connect((err) => {
-//   if (err) throw err;
-//   listOfOptions()
-// });
-// function listOfOptions() {
-//   inquirer
-//     .prompt({
-//       name: 'options',
-//       type: 'list',
-//       message: 'What Would You like to do?',
-//       choices: ['See All Employees', 'View all employees By Department', 'View all employees by Manager', 'Add employee', 'Remove employee', 'Update employee role', 'Update employee manager', 'Exit']
-//     })
-//     .then((Choice) => {
-//       // console.log("You chose : ", Choice);
-//       switch (Choice.options) {
-//         case 'See All Employees':
-//           //Add all case options
-//           readEmployee_Data_func()
-//           break
-//         case 'View all employees By Department':
-//           break
-//         case 'View all employees by Manager':
-//           break
-//         case 'Add employee':
-//           addEmployee()
-//           break
-//         case 'Remove employee':
-//           deleteEmployee_Data_func()
-//           break
-//         case 'Update employee role':
-//           updateEmployee_Data_func()
-//           break
-//         case 'Update employee manager':
-//           break
-//         case 'Exit':
-//           console.log('Thanks for playing');
-//           connection.end();
-//           break
-//         default:
-//           console.log('We have run into major issues');
-//       }
-//     })
-// }
+// Connect to the DB
+connection.connect((err) => {
+  if (err) throw err;
+  listOfOptions()
+});
+function listOfOptions() {
+  inquirer
+    .prompt({
+      name: 'options',
+      type: 'list',
+      message: 'What Would You like to do?',
+      choices: ['See All Employees', 'View all employees By Department', 'View all employees by Manager', 'Add employee', 'Remove employee', 'Update employee role', 'Update employee manager', 'Exit']
+    })
+    .then((Choice) => {
+      // console.log("You chose : ", Choice);
+      switch (Choice.options) {
+        case 'See All Employees':
+          //Add all case options
+          readEmployee_Data_func()
+          break
+        case 'View all employees By Department':
+          break
+        case 'View all employees by Manager':
+          break
+        case 'Add employee':
+          addEmployee()
+          break
+        case 'Remove employee':
+          deleteEmployee_Data_func()
+          break
+        case 'Update employee role':
+          updateEmployee_Data_func()
+          break
+        case 'Update employee manager':
+          break
+        case 'Exit':
+          console.log('Thanks for playing');
+          connection.end();
+          break
+        default:
+          console.log('We have run into major issues');
+      }
+    })
+}
 // Add departments, roles, employees
 // View departments, roles, employees
 // Update employee roles

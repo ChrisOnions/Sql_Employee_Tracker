@@ -152,27 +152,3 @@ function addEmployee() {
       })
   })
 }
-
-
-// function add_employee(choices) {
-//   console.log(choices);
-//   connection.query('INSERT INTO employee SET ? WHERE ?,',
-//     [{
-//       first_name: choices.first_Name,
-//       last_name: choices.last_Name,
-//       role_id: choices.role_Id,
-//       manager_id: choices.manager_Id
-//     }]
-
-//   )
-// }
-// const readProducts = () => {
-//   console.log('Selecting all products...\n');
-//   connection.query('SELECT * FROM products', (err, res) => {
-//     if (err) throw err;
-//     // Log all results of the SELECT statement
-//     console.log(res);
-//     connection.end();
-//   });
-// };
-

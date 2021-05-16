@@ -152,3 +152,37 @@ function addEmployee() {
       })
   })
 }
+
+// ------------------------------------------------
+// select all titles and the roles they acompany 
+// SELECT roles.id, roles.title, department.names AS department
+//                   FROM roles
+//                   INNER JOIN department ON roles.department_id = department.id;
+// ------------------------------------------------
+// select all deparments
+// select * from department; 
+// SELECT department.id AS id, department.names AS department FROM department
+// ----------------------------------------------
+// view all employees by department 
+// SELECT employee.first_name, 
+// 	   employee.last_name, 
+// 	   department.names
+// AS department
+// FROM employee 
+// LEFT JOIN roles
+// ON employee.id = roles.id 
+// LEFT JOIN department 
+// ON roles.id = department.id;
+// delete from roles where id = 2
+// ----------------------------------------------
+// select all employees
+// SELECT employee.id, 
+// 	   employee.first_name, 
+//        employee.last_name, 
+// 	   roles.title,                  
+// 	   department.names AS 'department', 
+// 	   roles.salary
+// FROM employee, roles, department 
+// WHERE department.id = roles.department_id
+// AND roles.id = employee.role_id
+// ORDER BY employee.id 

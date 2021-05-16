@@ -1,0 +1,24 @@
+{
+  "name": "employee_tracker_sql",
+  "version": "1.0.0",
+  "description": "Employee tracker for any company that needs to track employee.",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisOnions/Sql_Employee_Tracker.git"
+  },
+  "author": "Chris Onions",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChrisOnions/Sql_Employee_Tracker/issues"
+  },
+  "homepage": "https://github.com/ChrisOnions/Sql_Employee_Tracker#readme",
+  "dependencies": {
+    "inquirer": "^8.0.0",
+    "mysql": "^2.18.1"
+  }
+}

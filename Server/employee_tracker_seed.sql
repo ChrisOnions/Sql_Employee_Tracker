@@ -132,4 +132,4 @@ CREATE TABLE roles
       INSERT INTO employee
         (fires_name, last_name, role_id, manager,id)
       VALUES
-        ('Chris', 'Onions', )
+        ('Chris', 'Onions',  )

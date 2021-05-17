@@ -67,16 +67,7 @@ function listOfOptions() {
 
 function creatEemployee_func() {
   console.log('Creating employee');
-  connection.query(
-    'INSERT employee SET ?',
-    {
-      first_Name: 'Employee name here',
-      last_Name: 'Employee name here',
-      role_Id: 'Manager'
-    },
-    (err) => {
-      if (err) throw err;
-    })
+
 }
 
 function readEmployee_Data_func() {
@@ -108,50 +99,64 @@ function deleteEmployee_Data_func() {
   })
 }
 function addEmployee() {
-  connection.query('select * from department', (err, res) => {
+  connection.query('select * from roles', (err, res) => {
     if (err) throw err
-    let choice_arr = []
-    console.table(res);
-    res.forEach(({ names }) => {
-      choice_arr.push(names)
-    });
 
-    console.log(choice_arr);
-    inquirer.
-      prompt([
-        {
-          name: 'first_Name',
-          type: 'input',
-          message: 'Please enter employee first name',
-          default: 'Employee name here'
-        },
-        {
-          name: 'last_Name',
-          type: 'input',
-          message: 'Please enter employee last name',
-          default: 'Employee name here'
-        },
-        {
-          name: 'role_Id',
-          type: 'rawlist',
-          choices: (choice_arr),
-          message: 'Please enter employee role'
-          // Manager id comes from the id if its a manager?
-          // how do i get that ?
-        },
-        // {
-        //   name: 'manager_Id',
-        //   type: 'input',
-        //   message: 'Please enter employee manger id',
-        //   default: 'Employee name here'
-        // }
-      ])//add role via choice
-
-      .then((choices) => {
-        //'INSERT INTO employee SET ?'
-        console.log(choices);
-
+    // console.table(res);
+    let choice_arr = res.map(role => ({
+      name: role.title,
+      value: role.id
+    })
+    );
+    connection.query('select * from employee', (err, data) => {
+      if (err) throw err
+      console.log(data);
+      let choice_arr1 = data.map(role => ({
+        name: `${role.first_name} ${role.last_name}`,
+        value: role.id
       })
+      );
+      console.log(choice_arr1);
+      inquirer.
+        prompt([
+          {
+            name: 'first_name',
+            type: 'input',
+            message: 'Please enter employee first name',
+            default: 'Employee name here'
+          },
+          {
+            name: 'last_name',
+            type: 'input',
+            message: 'Please enter employee last name',
+            default: 'Employee name here'
+          },
+          {
+            name: 'role_id',
+            type: 'rawlist',
+            choices: choice_arr,
+            message: 'Please enter employee role'
+            // Manager id comes from the id if its a manager?
+            // how do i get that ?
+          },
+          {
+            name: 'manager_id',
+            type: 'rawlist',
+            message: 'Please enter employee manger id',
+            choices: choice_arr1
+          }
+        ])//add role via choice
+
+        .then((choices) => {
+          //'INSERT INTO employee SET ?'
+          console.log(choices);
+          connection.query('INSERT employee SET ?', choices,
+            (err) => {
+              if (err) throw err;
+              listOfOptions()
+            })
+        })
+    })
   })
 }
 

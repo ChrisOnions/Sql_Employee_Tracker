@@ -111,9 +111,11 @@ function addEmployee() {
   connection.query('select * from department', (err, res) => {
     if (err) throw err
     let choice_arr = []
+    console.table(res);
     res.forEach(({ names }) => {
       choice_arr.push(names)
     });
+
     console.log(choice_arr);
     inquirer.
       prompt([
@@ -148,7 +150,7 @@ function addEmployee() {
       .then((choices) => {
         //'INSERT INTO employee SET ?'
         console.log(choices);
-        add_employee(choices)
+
       })
   })
 }
@@ -186,3 +188,7 @@ function addEmployee() {
 // WHERE department.id = roles.department_id
 // AND roles.id = employee.role_id
 // ORDER BY employee.id 
+// ----------------------------------------------
+// Selects all people and role and department 
+
+// select first_name, last_name, title, salary, names   from employee,  roles, department where employee.id = roles.id; 

@@ -188,10 +188,13 @@ function addEmployee() {
 //        employee.last_name, 
 // 	   roles.title,                  
 // 	   department.names AS 'department', 
-// 	   roles.salary
+// 	   roles.salary,
+//     concat(employee.first_name,' ', 
+//       employee.last_name )AS manager
 // FROM employee, roles, department 
 // WHERE department.id = roles.department_id
 // AND roles.id = employee.role_id
+// AND employee.manager_id = employee.id
 // ORDER BY employee.id 
 // ----------------------------------------------
 // Selects all people and role and department 

@@ -66,11 +66,11 @@ function listOfOptions() {
 
 function readEmployee_Data_func() {
   console.log('reading data');
-  connection.query('select * from employee', (err, res) => {
+  connection.query('SELECT employee.id, employee.first_name, employee.last_name, roles.title, department.names AS department, roles.salary, CONCAT(manager.first_name," ", manager.last_name) AS manager FROM employee LEFT JOIN roles on employee.role_id = roles.id LEFT JOIN department on roles.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id', (err, res) => {
     if (err) throw err
 
     console.table(res)
-    connection.end()
+    listOfOptions()
   })
 }
 function updateEmployee_Data_func() {
@@ -78,6 +78,12 @@ function updateEmployee_Data_func() {
   // inquirer who would you like to update?
   // What would you like to update? manager_id, 
   //
+}
+function View_by_department() {
+  connection.query('SELECT roles.id, roles.title, department.names AS department FROM roles INNER JOIN department ON roles.department_id = department.id', (err, res) => {
+    if (err) throw err
+    console.table(res);
+  })
 }
 function deleteEmployee_Data_func() {
   console.log('Deleting data');
@@ -100,7 +106,6 @@ function deleteEmployee_Data_func() {
           choices: employees,
 
         }).then((employee_delete) => {
-          console.log(employees);
           connection.query(
             'DELETE FROM employee  WHERE ?', [
             {
@@ -110,6 +115,7 @@ function deleteEmployee_Data_func() {
             (err, res) => {
               if (err) throw err
               console.log('Employee deleted');
+              listOfOptions()
             }
           )
         })
@@ -130,15 +136,13 @@ function addEmployee() {
     })
     );
 
-    connection.query('select * from employee', (err, data) => {
+    connection.query('select * from employee where manager_id is null', (err, data) => {
       if (err) throw err
-      console.log(data);
       let choice_arr1 = data.map(role => ({
         name: `${role.first_name} ${role.last_name}`,
         value: role.id
       })
       );
-      console.log(choice_arr1);
       inquirer.
         prompt([
           {

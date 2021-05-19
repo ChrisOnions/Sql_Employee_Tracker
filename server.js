@@ -64,12 +64,6 @@ function listOfOptions() {
 // View departments, roles, employees
 // Update employee roles
 
-
-function creatEemployee_func() {
-  console.log('Creating employee');
-
-}
-
 function readEmployee_Data_func() {
   console.log('reading data');
   connection.query('select * from employee', (err, res) => {
@@ -91,7 +85,34 @@ function deleteEmployee_Data_func() {
   // Display all employees to select from
   connection.query('select * from employee', (err, res) => {
     if (err) throw err
-    console.table(res)
+
+    const employees = res.map(role => ({
+      name: `${role.first_name} ${role.last_name}`,
+      value: role.id
+    }))
+
+    inquirer.
+      prompt(
+        {
+          name: 'delete',
+          type: 'list',
+          message: 'Who would you like to remove?',
+          choices: employees,
+
+        }).then((employee_delete) => {
+          console.log(employees);
+          connection.query(
+            'DELETE FROM employee  WHERE ?', [
+            {
+              id: employee_delete.delete,
+            },
+          ],
+            (err, res) => {
+              if (err) throw err
+              console.log('Employee deleted');
+            }
+          )
+        })
     // Remove selected item
     // DELETE FROM products WHERE ?
     // Display table again with reoved items
@@ -108,6 +129,7 @@ function addEmployee() {
       value: role.id
     })
     );
+
     connection.query('select * from employee', (err, data) => {
       if (err) throw err
       console.log(data);
@@ -149,7 +171,7 @@ function addEmployee() {
 
         .then((choices) => {
           //'INSERT INTO employee SET ?'
-          console.log(choices);
+          console.log(choice_arr1);
           connection.query('INSERT employee SET ?', choices,
             (err) => {
               if (err) throw err;

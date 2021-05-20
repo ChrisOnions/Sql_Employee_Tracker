@@ -28,7 +28,7 @@ function listOfOptions() {
       name: 'options',
       type: 'list',
       message: 'What Would You like to do?',
-      choices: ['See All Employees', 'View all titles By Department', 'Add employee', 'Remove employee', 'Update employee role', 'Add Role', 'Exit']
+      choices: ['See All Employees', 'View all titles By Department', 'Add employee', 'Remove employee', 'Update employee role', 'Add Role', 'Add Department', 'Exit']
     })
     .then((Choice) => {
       // console.log("You chose : ", Choice);
@@ -51,6 +51,9 @@ function listOfOptions() {
           break
         case 'Add Role':
           addRole()
+          break
+        case 'Add Department':
+          addDepartment_func()
           break
         case 'Exit':
           console.log('Thanks for playing');
@@ -269,5 +272,21 @@ function addRole() {
       connection.query(`INSERT INTO roles (title, salary, department_id) VALUES ('${data.Title}', '${data.Salary}', '1')`)
     })
 }
+
+function addDepartment_func() {
+
+  inquirer.prompt([
+
+    {
+      name: 'Department',
+      type: 'input',
+      message: 'Enter Department name',
+    },
+  ]).then((data) => {
+    ` INSERT INTO department (names) VALUES ('${data.department}')``;
+})
+}
+
+  
 
 

@@ -28,7 +28,7 @@ function listOfOptions() {
       name: 'options',
       type: 'list',
       message: 'What Would You like to do?',
-      choices: ['See All Employees', 'View all titles By Department', 'Add employee', 'Remove employee', 'Update employee role', 'Update employee manager', 'Exit']
+      choices: ['See All Employees', 'View all titles By Department', 'Add employee', 'Remove employee', 'Update employee role', 'Add Role', 'Exit']
     })
     .then((Choice) => {
       // console.log("You chose : ", Choice);
@@ -49,7 +49,8 @@ function listOfOptions() {
         case 'Update employee role':
           updateEmployee_Data_func()
           break
-        case 'Update employee manager':
+        case 'Add Role':
+          addRole()
           break
         case 'Exit':
           console.log('Thanks for playing');
@@ -241,3 +242,32 @@ function addEmployee() {
     })
   })
 }
+function addRole() {
+  //connection.query get depatemny id 
+  inquirer.
+    prompt([
+      {
+        name: 'Title',
+        type: 'input',
+        message: 'Enter title of new role',
+      },
+      {
+        name: 'Salary',
+        type: 'input',
+        message: 'Enter Salary of new role',
+      },
+      {
+        name: 'Department',
+        type: 'input',
+        message: 'Enter Department of new role',
+      },
+    ]
+    ).then((data) => {
+      console.log(data);
+      console.log(data.Title);
+      console.log(data.Salary);
+      connection.query(`INSERT INTO roles (title, salary, department_id) VALUES ('${data.Title}', '${data.Salary}', '1')`)
+    })
+}
+
+

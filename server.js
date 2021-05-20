@@ -91,10 +91,9 @@ function updateEmployee_Data_func() {
           role_id: names.role_id
         }))
         const employee_id = data.map(names => ({
-          id: `${names.id}`,
-          name: ` ${names.id} `,
-
+          name: names.id,
         }))
+        console.log(employees);
         inquirer
           .prompt([
             {
@@ -116,8 +115,6 @@ function updateEmployee_Data_func() {
               choices: employee_id,
             },
           ]).then((Choice) => {
-            console.log(employees);
-            console.log(Choice);
             // console.log(data);
             // UPDATE employee SET  role_id = 7 WHERE id = 16;
             connection.query('UPDATE employee SET ? WHERE ?',

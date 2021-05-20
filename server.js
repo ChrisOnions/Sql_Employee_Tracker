@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
+const Choices = require('inquirer/lib/objects/choices');
 
 
 const connection = mysql.createConnection({
@@ -27,7 +28,7 @@ function listOfOptions() {
       name: 'options',
       type: 'list',
       message: 'What Would You like to do?',
-      choices: ['See All Employees', 'View all employees By Department', 'View all employees by Manager', 'Add employee', 'Remove employee', 'Update employee role', 'Update employee manager', 'Exit']
+      choices: ['See All Employees', 'View all titles By Department', 'Add employee', 'Remove employee', 'Update employee role', 'Update employee manager', 'Exit']
     })
     .then((Choice) => {
       // console.log("You chose : ", Choice);
@@ -36,9 +37,8 @@ function listOfOptions() {
           //Add all case options
           readEmployee_Data_func()
           break
-        case 'View all employees By Department':
-          break
-        case 'View all employees by Manager':
+        case 'View all titles By Department':
+          View_by_department()
           break
         case 'Add employee':
           addEmployee()
@@ -75,14 +75,75 @@ function readEmployee_Data_func() {
 }
 function updateEmployee_Data_func() {
   console.log('Updating data');
-  // inquirer who would you like to update?
-  // What would you like to update? manager_id, 
-  //
+  connection.query('select * from roles', (err, res) => {
+    if (err) throw err
+    let choice_arr = res.map(role => ({
+      name: role.title,
+      value: role.id
+    }))
+
+    connection.query(
+      'SELECT id, first_name, last_name, role_id from employee', (err, data) => {
+        if (err) throw err
+        const employees = data.map(names => ({
+          id: names.id,
+          name: `${names.first_name} ${names.last_name}`,
+          role_id: names.role_id
+        }))
+        const employee_id = data.map(names => ({
+          id: `${names.id}`,
+          name: ` ${names.id} `,
+
+        }))
+        inquirer
+          .prompt([
+            {
+              name: 'names',
+              type: 'rawlist',
+              message: 'Who would you like to update',
+              choices: employees,
+            },
+            {
+              name: 'role_id',
+              type: 'list',
+              message: 'What is the new role',
+              choices: choice_arr,
+            },
+            {
+              name: 'id',
+              type: 'list',
+              message: 'what is the id of the employee',
+              choices: employee_id,
+            },
+          ]).then((Choice) => {
+            console.log(employees);
+            console.log(Choice);
+            // console.log(data);
+            // UPDATE employee SET  role_id = 7 WHERE id = 16;
+            connection.query('UPDATE employee SET ? WHERE ?',
+              [
+                {
+                  role_id: Choice.role_id,
+                },
+                {
+                  id: Choice.id,
+                },
+              ],
+              listOfOptions()
+            )
+
+          })
+      })
+  })
 }
+
+
+
 function View_by_department() {
   connection.query('SELECT roles.id, roles.title, department.names AS department FROM roles INNER JOIN department ON roles.department_id = department.id', (err, res) => {
     if (err) throw err
     console.table(res);
+    listOfOptions()
   })
 }
 function deleteEmployee_Data_func() {
@@ -149,13 +210,11 @@ function addEmployee() {
             name: 'first_name',
             type: 'input',
             message: 'Please enter employee first name',
-            default: 'Employee name here'
           },
           {
             name: 'last_name',
             type: 'input',
             message: 'Please enter employee last name',
-            default: 'Employee name here'
           },
           {
             name: 'role_id',
@@ -185,44 +244,3 @@ function addEmployee() {
     })
   })
 }
-
-// ------------------------------------------------
-// select all titles and the roles they acompany 
-// SELECT roles.id, roles.title, department.names AS department
-//                   FROM roles
-//                   INNER JOIN department ON roles.department_id = department.id;
-// ------------------------------------------------
-// select all deparments
-// select * from department; 
-// SELECT department.id AS id, department.names AS department FROM department
-// ----------------------------------------------
-// view all employees by department 
-// SELECT employee.first_name, 
-// 	   employee.last_name, 
-// 	   department.names
-// AS department
-// FROM employee 
-// LEFT JOIN roles
-// ON employee.id = roles.id 
-// LEFT JOIN department 
-// ON roles.id = department.id;
-// delete from roles where id = 2
-// ----------------------------------------------
-// select all employees
-// SELECT employee.id, 
-// 	   employee.first_name, 
-//        employee.last_name, 
-// 	   roles.title,                  
-// 	   department.names AS 'department', 
-// 	   roles.salary,
-//     concat(employee.first_name,' ', 
-//       employee.last_name )AS manager
-// FROM employee, roles, department 
-// WHERE department.id = roles.department_id
-// AND roles.id = employee.role_id
-// AND employee.manager_id = employee.id
-// ORDER BY employee.id 
-// ----------------------------------------------
-// Selects all people and role and department 
-
-// select first_name, last_name, title, salary, names   from employee,  roles, department where employee.id = roles.id; 

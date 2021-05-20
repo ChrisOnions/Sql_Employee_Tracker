@@ -97,7 +97,6 @@ function updateEmployee_Data_func() {
         const employee_id = data.map(names => ({
           name: names.id,
         }))
-        console.log(employees);
         inquirer
           .prompt([
             {
@@ -270,23 +269,21 @@ function addRole() {
       console.log(data.Title);
       console.log(data.Salary);
       connection.query(`INSERT INTO roles (title, salary, department_id) VALUES ('${data.Title}', '${data.Salary}', '1')`)
+      listOfOptions()
     })
+
 }
 
 function addDepartment_func() {
 
   inquirer.prompt([
-
     {
       name: 'Department',
       type: 'input',
       message: 'Enter Department name',
     },
   ]).then((data) => {
-    ` INSERT INTO department (names) VALUES ('${data.department}')``;
-})
+    ` INSERT INTO department (names) VALUES ('${data.department}')`;
+    listOfOptions()
+  })
 }
-
-  
-
-

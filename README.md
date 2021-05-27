@@ -43,33 +43,16 @@ If you would like to colaborate on this project or would like to know more pleas
 
 <span style="color:green">NPM i</span> - (To install all required packages from package.json)
 
-<span style="color:green">Create file .env </span> - (From github Repository)
-
-```.env
-DB_USER=''
-DB_PW=''
-DB_NAME='ecommerce_db'
-
-```
-
-<span style="color:green">Create Db</span> - ( Sql database)
-
-```
-DROP DATABASE IF EXISTS ecommerce_db;
-CREATE DATABASE ecommerce_db;
-```
-
-<span style="color:green">npm run seed</span> - (Seed Sql database)
-
-<span style="color:green">Node Server.js</span> - (Starts program)
-
-<span style="color:green">Visist http://localhost:3001/</span> - (Or change PORT)
-
-<span style="color:green">Use postman/insomnia to test routes</span> - (Useage)
+<span style="color:green">npm start</span> - (Seed Sql database)
 
 ---
 
 ## Pictures
 
-![Existing notes are listed in the left-hand column with empty fields on the right-hand side for the new note’s title and text.](./Assets\express-note-taker.JPG)
-![Note titled “Balance accounts” reads, “Balance account books by end of day Monday,” with other notes listed on the left.](./Assets/express-demo-02.png)
+![Command line interface](./Assets\express-note-taker.JPG)
+![Display of employees on the command line](./Assets/express-demo-02.png)
+
+
+## Contact
+
+- Email : c.onions101@gmail.com

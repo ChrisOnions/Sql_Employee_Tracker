@@ -43,7 +43,7 @@ If you would like to colaborate on this project or would like to know more pleas
 
 <span style="color:green">NPM i</span> - (To install all required packages from package.json)
 
-<span style="color:green">npm start</span> - (Seed Sql database)
+<span style="color:green">npm start</span> - (Start command line interface)
 
 ---
 
